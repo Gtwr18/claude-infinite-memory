@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Memory System Ready. Use /memory-search to search, /memory-commit to save learnings.'"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/evaluation-protocol.sh"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/memory/inject-context.mjs \"$USER_PROMPT\""
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/memory/check-learnings.mjs"
+          }
+        ]
+      }
+    ]
+  }
+}
